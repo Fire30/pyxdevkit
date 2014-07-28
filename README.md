@@ -11,10 +11,12 @@ This is early in development and I wouldn't use it for anything real right now. 
 
 Installation
 -----------
-.. code-block:: bash
-	$ git clone https://github.com/Fire30/pyxdevkit.git
-	$ cd pyxdevkit
-	$ python setup.py
+
+```bash
+$ git clone https://github.com/Fire30/pyxdevkit.git
+$ cd pyxdevkit
+$ python setup.py
+```
 
 Hopefully I will put it on pip someday
 

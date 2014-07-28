@@ -24,6 +24,8 @@ Features
 -------
  - Get Memory
  - Set Memory
+ - Connect as Debugger
+ - Set Breakpoints
 
 Hopefully this will slowly increase over time.
 

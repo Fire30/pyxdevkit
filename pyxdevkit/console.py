@@ -34,9 +34,3 @@ class Console(object):
 			# The first two bytes of the binary response are not part of the mem
 			received += sock.recv(length)[2:]
 		return received
-
-
-con = Console('192.168.1.69')
-received = con.get_mem(0x81825D18,16000)
-print len(received)
-print received.encode('hex')

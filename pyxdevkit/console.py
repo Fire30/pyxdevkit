@@ -14,6 +14,7 @@ class Console(object):
 	def __init__(self, ip_address):
 		# Since sdk is not neccasrily installed we use ip address not name to connect
 		self.ip_address = ip_address
+		
 	def get_mem(self,addr,length):
 		"""Returns the length amount of memory from addr"""
 		# Set up the socket and connect
@@ -34,6 +35,7 @@ class Console(object):
 		while len(received) < length:
 			received += sock.recv(length)[2:]
 		return received
+
 	def set_mem(self,addr,data):
 		""" Sets the memory at addr to data
 			The value in data has to be a string of hexadecimal characters
@@ -43,5 +45,35 @@ class Console(object):
 		HOST, PORT = self.ip_address, 730
 		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		sock.connect((HOST, PORT))
-		# This is the cmd that we send to the console
+		# This is the cmd that we send to the consoles
 		sock.send("SETMEM ADDR=0x%x DATA=%s\r\n" % (addr,data))
+
+	def connect_as_debugger(self, name):
+		""" Connects as a debugger so you can do things such as setting breakpoints.
+			There is also a flags parameter in the C# dll
+			but it does not seem to change the request when I monitor the requests.
+			So it has been ommited
+		"""
+		# Set up the socket and connect
+		HOST, PORT = self.ip_address, 730
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock.connect((HOST, PORT))
+		# Connecting as a debugger actually takes two requests.
+		# First you have to specify a reconnect port
+		# Then you actually have to connect
+		sock.send("NOTIFY RECONNECTPORT=51523 reverse\r\n")
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock.connect((HOST, PORT))
+		sock.send('DEBUGGER CONNECT PORT=0x0000C901 override user=WINCTRL-TQMC306 name="%s"\r\n' % name)
+
+	def set_breakpoint(self, addr):
+		""" Sets a breakpoint at addr. 
+			addr must be a 32 bit integer.
+			ex addr = 0x83C88AC4
+		"""
+		# Set up the socket and connect
+		HOST, PORT = self.ip_address, 730
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock.connect((HOST, PORT))
+		# This is the cmd that we send to the console
+		sock.send("BREAK ADDR=0x%x\r\n" % addr)

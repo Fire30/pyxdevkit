@@ -15,7 +15,7 @@ Installation
 ```bash
 $ git clone https://github.com/Fire30/pyxdevkit.git
 $ cd pyxdevkit
-$ python setup.py
+$ python setup.py install
 ```
 
 Hopefully I will put it on pip someday

@@ -7,7 +7,7 @@ I am a linux and python user by choice and debugging on the xbox is essentially 
 
 Note
 --------
-This is early in development and I wouldn't use it for anyting real right now. I will remove this when it is more stable.
+This is early in development and I wouldn't use it for anything real right now. I will remove this when it is more stable.
 
 Installation
 -----------
@@ -20,7 +20,7 @@ Hopefully I will put it on pip someday
 
 Features
 -------
-None right now.
+ - Get Memory from Address
 
 Hopefully this will slowly increase over time.
 

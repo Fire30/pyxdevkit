@@ -22,7 +22,8 @@ Hopefully I will put it on pip someday
 
 Features
 -------
- - Get Memory from Address
+ - Get Memory
+ - Set Memory
 
 Hopefully this will slowly increase over time.
 

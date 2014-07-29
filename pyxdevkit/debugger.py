@@ -29,8 +29,7 @@ class Debugger(object):
 		sock.close()
 
 	def go(self):
-		"""
-			If a console is currently stopped, eg a breakpoint was hit, 
+		""" If a console is currently stopped, eg a breakpoint was hit, 
 			it will start the execution again
 		"""
 		HOST, PORT = self.ip_address, 730

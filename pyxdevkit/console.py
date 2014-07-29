@@ -17,6 +17,7 @@ class Console(object):
 		self.ip_address = ip_address
 
 	def get_name(self):
+		"""Gets the name of the connected console"""
 		# Set up the socket and connect
 		HOST, PORT = self.ip_address, 730
 		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -27,7 +28,7 @@ class Console(object):
 		sock.recv(1024)
 		name = sock.recv(1024)
 		return name[5:]
-		
+
 	def get_mem(self,addr,length):
 		"""Returns the length amount of memory from addr"""
 		# Set up the socket and connect

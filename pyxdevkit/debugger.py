@@ -50,6 +50,9 @@ class Debugger(object):
 		""" When the debugger is connected, the console periodically sends back 
 			notifications that the used can handle. We just pass them to the 
 			on_std_notify_func function.
+
+			TODO: Create EventInfo and EventType objects that act like thier
+			xdevkit equivalent.
 		"""
 		while True:
 			for i in threading.enumerate():

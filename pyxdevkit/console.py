@@ -94,3 +94,15 @@ class Console(object):
 		# This is the cmd that we send to the console
 		sock.send("BREAK ADDR=0x%x\r\n" % addr)
 		sock.close()
+
+	def go(self):
+		"""
+			If a console is currently stopped, eg a breakpoint was hit, 
+			it will start the execution again
+		"""
+		HOST, PORT = self.ip_address, 730
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock.connect((HOST, PORT))
+		# This is the cmd that we send to the console
+		sock.send("GO\r\n" % addr)
+		sock.close()

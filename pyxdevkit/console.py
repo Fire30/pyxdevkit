@@ -8,13 +8,14 @@ module that implements xdevkit's methods.
 """
 import socket
 import sys
-from threading import Thread
+from debugger import Debugger
 
 class Console(object):
 	"""object that contains the functions that implement xdevkit"""
 	def __init__(self, ip_address):
 		# Since sdk is not neccasrily installed we use ip address not name to connect
 		self.ip_address = ip_address
+		self.debugger = None
 
 	def get_name(self):
 		"""Gets the name of the connected console"""
@@ -81,28 +82,6 @@ class Console(object):
 		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		sock.connect((HOST, PORT))
 		sock.send('DEBUGGER CONNECT PORT=0x0000C901 override user=WINCTRL-TQMC306 name="%s"\r\n' % name)
-
-	def set_breakpoint(self, addr):
-		""" Sets a breakpoint at addr. 
-			addr must be a 32 bit integer.
-			ex addr = 0x83C88AC4
-		"""
-		# Set up the socket and connect
-		HOST, PORT = self.ip_address, 730
-		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		sock.connect((HOST, PORT))
-		# This is the cmd that we send to the console
-		sock.send("BREAK ADDR=0x%x\r\n" % addr)
-		sock.close()
-
-	def go(self):
-		"""
-			If a console is currently stopped, eg a breakpoint was hit, 
-			it will start the execution again
-		"""
-		HOST, PORT = self.ip_address, 730
-		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		sock.connect((HOST, PORT))
-		# This is the cmd that we send to the console
-		sock.send("GO\r\n" % addr)
-		sock.close()
+		# Create the consoles debugger
+		# Now we are able to do things such as set breakpoints 
+		self.debugger = Debugger(self.ip_address,sock)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-pyxdevkit.console
+pyxdevkit.debugger
 ~~~~~~~~~~~~~
 
 module that implements the debugger features of xdevkit.

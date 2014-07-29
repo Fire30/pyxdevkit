@@ -8,12 +8,25 @@ module that implements xdevkit's methods.
 """
 import socket
 import sys
+from threading import Thread
 
 class Console(object):
 	"""object that contains the functions that implement xdevkit"""
 	def __init__(self, ip_address):
 		# Since sdk is not neccasrily installed we use ip address not name to connect
 		self.ip_address = ip_address
+
+	def get_name(self):
+		# Set up the socket and connect
+		HOST, PORT = self.ip_address, 730
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock.connect((HOST, PORT))
+		# This is the cmd that we send to the console
+		sock.send("DBGNAME\r\n")
+		#First recv just says that we are connected
+		sock.recv(1024)
+		name = sock.recv(1024)
+		return name[5:]
 		
 	def get_mem(self,addr,length):
 		"""Returns the length amount of memory from addr"""
@@ -34,6 +47,7 @@ class Console(object):
 		received = received.split('\r\n')[1][2:]
 		while len(received) < length:
 			received += sock.recv(length)[2:]
+		sock.close()
 		return received
 
 	def set_mem(self,addr,data):
@@ -47,6 +61,7 @@ class Console(object):
 		sock.connect((HOST, PORT))
 		# This is the cmd that we send to the consoles
 		sock.send("SETMEM ADDR=0x%x DATA=%s\r\n" % (addr,data))
+		sock.close()
 
 	def connect_as_debugger(self, name):
 		""" Connects as a debugger so you can do things such as setting breakpoints.
@@ -77,3 +92,4 @@ class Console(object):
 		sock.connect((HOST, PORT))
 		# This is the cmd that we send to the console
 		sock.send("BREAK ADDR=0x%x\r\n" % addr)
+		sock.close()

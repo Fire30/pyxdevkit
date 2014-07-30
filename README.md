@@ -35,7 +35,9 @@ Hopefully this will slowly increase over time.
 
 Examples
 --------
-None 
+None
+
+Once There are enough features that this might be useful I will update it with examples.
 
 Dependencies
 --------

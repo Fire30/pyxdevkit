@@ -24,8 +24,12 @@ Features
 -------
  - Get Memory
  - Set Memory
+ - Get Console Name
  - Connect as Debugger
  - Set Breakpoints
+ - Start Execution After Break
+ - Execute Function on Notification
+ - Get Registers
 
 Hopefully this will slowly increase over time.
 

@@ -45,10 +45,16 @@ class Console(object):
 		# If the length is small it will be returned all in one recv.
 		# If it is larger it will take multiple.
 		# Note: The first two bytes of the binary response are not part of the memory
+		sock.settimeout(.2)
 		received = sock.recv(4096 + length)
-		received = received.split('\r\n')[1][2:]
+		received = received.replace('203- binary response follows\r\n','')[2:]
 		while len(received) < length:
-			received += sock.recv(length)[2:]
+			try:
+				data = sock.recv(1026)
+				received += data[2:]
+			except:
+				sock.close()
+				return received
 		sock.close()
 		return received
 
@@ -79,9 +85,9 @@ class Console(object):
 		# First you have to specify a reconnect port
 		# Then you actually have to connect
 		sock.send("NOTIFY RECONNECTPORT=51523 reverse\r\n")
-		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		sock.connect((HOST, PORT))
-		sock.send('DEBUGGER CONNECT PORT=0x0000C901 override user=WINCTRL-TQMC306 name="%s"\r\n' % name)
 		# Create the consoles debugger
 		# Now we are able to do things such as set breakpoints 
 		self.debugger = Debugger(self.ip_address,sock)
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock.connect((HOST, PORT))
+		sock.send('DEBUGGER CONNECT PORT=0x0000C901 override user=WINCTRL-TQMC306 name="%s"\r\n' % name)

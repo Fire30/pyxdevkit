@@ -36,9 +36,79 @@ Hopefully this will slowly increase over time.
 
 Examples
 --------
-None
 
-Once There are enough features that this might be useful I will update it with examples.
+### Initialization
+
+```python
+>>> import pyxdevkit
+
+>>> con = pyxdevkit.Console('192.168.1.69')
+```
+
+### Getting Name
+
+```python
+>>> con.get_name()
+'Jtag'
+```
+
+### Getting Memory
+```python
+>>> addr = 0x82000000
+>>> length = 8
+>>> mem = con.get_memory(addr,length)
+>>> print mem.encode('hex')
+4d5a900003000000
+```
+
+### Setting Memory
+```python
+>>> addr = 0x82000000
+>>> value = 'FFFFFFFFFFFFFFFF'
+>>> con.set_memory(addr,length)
+>>> mem = con.get_memory(addr,len(value))
+>>> print mem.encode('hex')
+ffffffffffffffff
+```
+### Rebooting Console
+```python
+>>> con.reboot()
+```
+
+### Connecting As Debugger
+```python
+>>> con.connect_as_debugger()
+>>> # You can now use the other debugger functions such as breakpoints
+...
+>>> # Accessed with con.debugger
+```
+
+### Setting Breakpoints
+```python
+>>> # Note that this starts a new thread that stops when the main thread exits
+...
+>>> con.debuger.set_breakpoint(0x8234A68)
+```
+
+### Executing Function on Break
+```python
+This also shows you how to get registers and restart execution
+
+>>> def on_break(event_type,event_info):
+...		# the event_type variable is a string with the type of event
+...		# The most common is break
+...     if event_type == 'break':
+...		# get_registers returns a dict of all registers and their values
+...             regs = event_info.thread.get_registers()
+...				# Gpr5 is the same as r5
+...             print regs['Gpr5']
+...		# Shows how to continue when execution is stopped
+...     if event_info.is_stopped:
+...             event_info.thread.t_continue()
+...             con.debugger.go()
+...
+>>> con.debugger.on_std_notify_func = on_break
+```
 
 Dependencies
 --------

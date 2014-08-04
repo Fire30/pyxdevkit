@@ -7,7 +7,6 @@ pyxdevkit.console
 module that implements xdevkit's methods.
 """
 import socket
-import sys
 from debugger import Debugger
 
 class Console(object):
@@ -91,3 +90,10 @@ class Console(object):
 		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		sock.connect((HOST, PORT))
 		sock.send('DEBUGGER CONNECT PORT=0x0000C901 override user=WINCTRL-TQMC306 name="%s"\r\n' % name)
+
+	def reboot(self):
+		""" Reboots the console. """
+		HOST, PORT = self.ip_address, 730
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock.connect((HOST, PORT))
+		sock.send("magicboot COLD\r\n")

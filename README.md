@@ -25,6 +25,7 @@ Features
  - Get Memory
  - Set Memory
  - Get Console Name
+ - Reboot Console
  - Connect as Debugger
  - Set Breakpoints
  - Start Execution After Break

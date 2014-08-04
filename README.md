@@ -112,4 +112,4 @@ This also shows you how to get registers and restart execution
 
 Dependencies
 --------
-None as of right now!
+ - You must have xbdm on your console.

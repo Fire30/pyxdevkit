@@ -27,7 +27,7 @@ class Console(object):
 		#First recv just says that we are connected
 		sock.recv(1024)
 		name = sock.recv(1024)
-		return name[5:]
+		return name[5:-2]
 
 	def get_mem(self,addr,length):
 		"""Returns the length amount of memory from addr"""

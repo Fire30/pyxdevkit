@@ -9,6 +9,11 @@ Note
 --------
 This is early in development and I wouldn't use it for anything real right now. I will remove this when it is more stable.
 
+
+Dependencies
+--------
+ - You must have xbdm on your console.
+
 Installation
 -----------
 
@@ -109,7 +114,3 @@ This also shows you how to get registers and restart execution
 ...
 >>> con.debugger.on_std_notify_func = on_break
 ```
-
-Dependencies
---------
- - You must have xbdm on your console.

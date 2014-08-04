@@ -7,10 +7,9 @@ pyxdevkit.debugger
 module that implements the debugger features of xdevkit.
 """
 import socket
-import sys
-from threading import Thread
 import select
 import threading
+from threading import Thread
 from event import EventInfo
 
 class Debugger(object):
@@ -24,7 +23,7 @@ class Debugger(object):
 		self.thread.start()
 
 	def set_breakpoint(self, addr):
-		""" Sets a breakpoint at addr. 
+		"""	Sets a breakpoint at addr. 
 			addr must be a 32 bit integer.
 			ex addr = 0x83C88AC4
 		"""
@@ -37,7 +36,7 @@ class Debugger(object):
 		sock.close()
 
 	def go(self):
-		""" If a console is currently stopped, eg a breakpoint was hit, 
+		"""	If a console is currently stopped, eg a breakpoint was hit, 
 			it will start the execution again
 		"""
 		HOST, PORT = self.ip_address, 730
@@ -48,7 +47,7 @@ class Debugger(object):
 		sock.close()
 
 	def listen_for_notify(self):
-		""" When the debugger is connected, the console periodically sends back 
+		"""	When the debugger is connected, the console periodically sends back 
 			notifications that the used can handle. We just pass them to the 
 			on_std_notify_func function.
 		"""

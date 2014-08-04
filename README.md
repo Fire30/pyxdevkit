@@ -18,7 +18,7 @@ $ cd pyxdevkit
 $ python setup.py install
 ```
 
-Hopefully I will put it on pip someday
+Hopefully I will put it on pypi someday
 
 Features
 -------

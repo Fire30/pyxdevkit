@@ -41,7 +41,6 @@ Examples
 
 ```python
 >>> import pyxdevkit
-
 >>> con = pyxdevkit.Console('192.168.1.69')
 ```
 
@@ -70,6 +69,7 @@ Examples
 >>> print mem.encode('hex')
 ffffffffffffffff
 ```
+
 ### Rebooting Console
 ```python
 >>> con.reboot()
@@ -85,8 +85,8 @@ ffffffffffffffff
 
 ### Setting Breakpoints
 ```python
->>> # Note that this starts a new thread that stops when the main thread exits
-...
+Note that this starts a new thread that stops when the main thread exits
+
 >>> con.debuger.set_breakpoint(0x8234A68)
 ```
 

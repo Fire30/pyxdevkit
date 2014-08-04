@@ -60,7 +60,7 @@ Examples
 ```python
 >>> addr = 0x82000000
 >>> length = 8
->>> mem = con.get_memory(addr,length)
+>>> mem = con.get_mem(addr,length)
 >>> print mem.encode('hex')
 4d5a900003000000
 ```
@@ -69,8 +69,8 @@ Examples
 ```python
 >>> addr = 0x82000000
 >>> value = 'FFFFFFFFFFFFFFFF'
->>> con.set_memory(addr,length)
->>> mem = con.get_memory(addr,len(value))
+>>> con.set_mem(addr,length)
+>>> mem = con.get_mem(addr,len(value))
 >>> print mem.encode('hex')
 ffffffffffffffff
 ```
@@ -107,10 +107,10 @@ This also shows you how to get registers and restart execution
 ...             regs = event_info.thread.get_registers()
 ...				# Gpr5 is the same as r5
 ...             print regs['Gpr5']
-...		# Shows how to continue when execution is stopped
-...     if event_info.is_stopped:
-...             event_info.thread.t_continue()
-...             con.debugger.go()
+...				# Shows how to continue when execution is stopped
+...     		if event_info.is_stopped:
+...             		event_info.thread.t_continue()
+...             		con.debugger.go()
 ...
 >>> con.debugger.on_std_notify_func = on_break
 ```

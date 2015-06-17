@@ -8,5 +8,5 @@ setup(
     author='T.J. Corley',
     author_email='tjcorley30@hotmail.com',
     description='xdevkit for python.',
-    long_description=open('README.MD').read(),
+    long_description=open('README.md').read(),
 )

@@ -24,8 +24,8 @@ class Console(object):
         """Gets the name of the connected console"""
         # Set up the socket and connect
         HOST, PORT = self.ip_address, 730
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((HOST, PORT))
+        sock = socket.create_connection(
+            (HOST, PORT), timeout=.2)
         # This is the cmd that we send to the console
         sock.send("DBGNAME\r\n")
         # First recv just says that we are connected
@@ -37,8 +37,8 @@ class Console(object):
         """Returns the length amount of memory from addr"""
         # Set up the socket and connect
         HOST, PORT = self.ip_address, 730
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((HOST, PORT))
+        sock = socket.create_connection(
+            (HOST, PORT), timeout=.2)
         # This is the cmd that we send to the console
         sock.send("GETMEMEX ADDR=0x%x LENGTH=0x%x\r\n" % (addr, length))
         # The first response is always 201-connected
@@ -50,7 +50,6 @@ class Console(object):
         # If it is larger it will take multiple.
         # Note: The first two bytes of the binary response are not part of the
         # memory
-        sock.settimeout(.2)
         received = sock.recv(4096 + length)
         received = received.replace('203- binary response follows\r\n', '')[2:]
         while len(received) < length:
@@ -70,8 +69,8 @@ class Console(object):
         """
         # Set up the socket and connect
         HOST, PORT = self.ip_address, 730
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((HOST, PORT))
+        sock = socket.create_connection(
+            (HOST, PORT), timeout=.2)
         # This is the cmd that we send to the consoles
         sock.send("SETMEM ADDR=0x%x DATA=%s\r\n" % (addr, data))
         sock.close()
@@ -84,8 +83,8 @@ class Console(object):
         """
         # Set up the socket and connect
         HOST, PORT = self.ip_address, 730
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((HOST, PORT))
+        sock = socket.create_connection(
+            (HOST, PORT), timeout=.2)
         # Connecting as a debugger actually takes two requests.
         # First you have to specify a reconnect port
         # Then you actually have to connect
@@ -100,7 +99,7 @@ class Console(object):
 
     def reboot(self):
         """ Reboots the console. """
-        HOST, PORT = self.ip_address, 730
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((HOST, PORT))
+            HOST, PORT = self.ip_address, 730
+        sock = socket.create_connection(
+            (HOST, PORT), timeout=.2)
         sock.send("magicboot COLD\r\n")

@@ -99,7 +99,7 @@ class Console(object):
 
     def reboot(self):
         """ Reboots the console. """
-            HOST, PORT = self.ip_address, 730
+        HOST, PORT = self.ip_address, 730
         sock = socket.create_connection(
             (HOST, PORT), timeout=.2)
         sock.send("magicboot COLD\r\n")

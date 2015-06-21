@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-fut14
+pyxdevkit
 ~~~~~~~~~~~~~~~~~~~~~
 
-fut14 is a simple library for managing Fifa 14 Ultimate Team.
+pyxdevkit is a library that tries to mimic xdevkit functionality in python.
 
 Usage:
 

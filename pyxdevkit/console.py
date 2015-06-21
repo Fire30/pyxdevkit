@@ -8,7 +8,7 @@ module that implements xdevkit's methods.
 """
 import socket
 from debugger import Debugger
-
+from pyxdevkit.exceptions import ConnectionError,NotConnectedError
 
 class Console(object):
 
@@ -19,9 +19,28 @@ class Console(object):
         # connect
         self.ip_address = ip_address
         self.debugger = None
+        self.is_connected = False
+
+    def connect(self):
+        """Connects to the console"""
+        try:
+            # Set up the socket and connect
+            HOST, PORT = self.ip_address, 730
+            sock = socket.create_connection(
+                (HOST, PORT), timeout=.2)
+            # This is the cmd that we send to the console
+            sock.send("DBGNAME\r\n")
+            # First recv just says that we are connected
+            sock.recv(1024)
+            sock.recv(1024)
+            self.is_connected = True
+        except:
+            raise ConnectionError(self.ip_address)
 
     def get_name(self):
         """Gets the name of the connected console"""
+        if not self.is_connected:
+            raise NotConnectedError()
         # Set up the socket and connect
         HOST, PORT = self.ip_address, 730
         sock = socket.create_connection(
@@ -35,6 +54,8 @@ class Console(object):
 
     def get_mem(self, addr, length):
         """Returns the length amount of memory from addr"""
+        if not self.is_connected:
+            raise NotConnectedError()
         # Set up the socket and connect
         HOST, PORT = self.ip_address, 730
         sock = socket.create_connection(
@@ -67,6 +88,8 @@ class Console(object):
                 The value in data has to be a string of hexadecimal characters
                 so for example data = 'DEADBEEF' is fine
         """
+        if not self.is_connected:
+            raise NotConnectedError()        
         # Set up the socket and connect
         HOST, PORT = self.ip_address, 730
         sock = socket.create_connection(
@@ -81,6 +104,8 @@ class Console(object):
                 but it does not seem to change the request when I monitor the requests.
                 So it has been ommited
         """
+        if not self.is_connected:
+            raise NotConnectedError()
         # Set up the socket and connect
         HOST, PORT = self.ip_address, 730
         sock = socket.create_connection(
@@ -99,6 +124,8 @@ class Console(object):
 
     def reboot(self):
         """ Reboots the console. """
+        if not self.is_connected:
+            raise NotConnectedError()
         HOST, PORT = self.ip_address, 730
         sock = socket.create_connection(
             (HOST, PORT), timeout=.2)

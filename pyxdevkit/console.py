@@ -28,12 +28,12 @@ class Console(object):
             HOST, PORT = self.ip_address, 730
             sock = socket.create_connection(
                 (HOST, PORT), timeout=.2)
-            # This is the cmd that we send to the console
-            sock.send("DBGNAME\r\n")
-            # First recv just says that we are connected
-            sock.recv(1024)
-            sock.recv(1024)
-            self.is_connected = True
+            if sock.recv(1024) == '201- connected\r\n':
+                self.is_connected = True
+                sock.close()
+            else:
+                sock.close()
+                raise ConnectionError(self.ip_address)
         except:
             raise ConnectionError(self.ip_address)
 
@@ -50,6 +50,7 @@ class Console(object):
         # First recv just says that we are connected
         sock.recv(1024)
         name = sock.recv(1024)
+        sock.close()
         return name[5:-2]
 
     def get_mem(self, addr, length):
